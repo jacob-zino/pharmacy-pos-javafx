@@ -1,0 +1,40 @@
+plugins {
+    id 'application'
+    id 'org.openjfx.javafxplugin' version '0.1.0'
+}
+
+group = 'pharmacy_pos'
+version = '1.0'
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(21)
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+javafx {
+    version = '21.0.8'
+    modules = ['javafx.controls']
+}
+
+dependencies {
+    implementation 'com.mysql:mysql-connector-j:9.4.0'
+    implementation 'org.apache.pdfbox:pdfbox:3.0.6'
+    implementation 'org.mindrot:jbcrypt:0.4'
+}
+
+application {
+    mainClass = 'pharmacy_pos.Main'
+}
+
+// Add a login: gradlew createUser --args="username password ADMIN|CASHIER"
+tasks.register('createUser', JavaExec) {
+    group = 'application'
+    description = 'Creates a user with a BCrypt-hashed password.'
+    classpath = sourceSets.main.runtimeClasspath
+    mainClass = 'pharmacy_pos.CreateUser'
+}
